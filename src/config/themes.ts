@@ -15,9 +15,9 @@ export const THEMES: Record<string, Theme> = {
     dark_default: {
         background: "#212737",
         foreground: "#eaedf3",
-        accent: "#ff6b01",
+        accent: "#60a5fa",
         muted: "#343f60",
-        border: "#ab4b08",
+        border: "#3b4868",
         surface: "#212737",
         isDark: true,
     },
@@ -37,6 +37,6 @@ export const THEMES: Record<string, Theme> = {
         foreground: '#e6dfd3',
         muted: '#8a7d71',
         border: '#3d342d',
-        accent: '#d97757',
+        accent: '#60a5fa',
     }
 };

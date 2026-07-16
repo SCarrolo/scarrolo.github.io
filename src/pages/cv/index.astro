@@ -53,7 +53,9 @@ const { name, title, experience = [], education = [] } = cvEntry.data;
                         subtitle: edu.institution,
                         period: edu.period,
                         description: edu.description,
-                        thesis: edu.thesis
+                        thesis: edu.thesis,
+                        externalUrl: edu.external_url,
+                        externalLabel: "Thesis link"
                     }))} />
                 </section>
             )
@@ -64,4 +66,3 @@ const { name, title, experience = [], education = [] } = cvEntry.data;
         </div>
     </div>
 </BaseLayout>
-

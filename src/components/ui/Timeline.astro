@@ -5,6 +5,8 @@ export interface TimelineItemData {
     subtitle: string;
     description?: string;
     thesis?: string;
+    externalUrl?: string;
+    externalLabel?: string;
 }
 
 interface Props {
@@ -43,6 +45,16 @@ const { items } = Astro.props;
                         <div class="body italic mt-2 opacity-80">
                             Thesis: {item.thesis}
                         </div>
+                    )}
+                    {item.externalUrl && (
+                        <a
+                            href={item.externalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="link body-sm inline-block mt-2"
+                        >
+                            {item.externalLabel || "External link"}
+                        </a>
                     )}
                 </div>
             </div>

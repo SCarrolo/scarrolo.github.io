@@ -17,9 +17,13 @@ const publications = defineCollection({
 });
 
 const talks = defineCollection({
-    loader: glob({ pattern: "**/*.md", base: "./src/content/talks" }),
+    loader: glob({ pattern: ["**/*.md", "!_template.md"], base: "./src/content/talks" }),
     schema: z.object({
         title: z.string(),
+        paper_reference: z.string().optional(),
+        paper_slug: z.string().optional(),
+        paper_url: z.string().url().optional(),
+        slides_url: z.string().url().optional(),
         date: z.string().optional(),
         event: z.string().optional(),
         external_url: z.string().optional(),
@@ -91,6 +95,7 @@ const cv = defineCollection({
             period: z.string(),
             thesis: z.string().optional(),
             description: z.string().optional(),
+            external_url: z.string().url().optional(),
         })).optional(),
     }),
 });

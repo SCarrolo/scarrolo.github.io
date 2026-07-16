@@ -2,7 +2,7 @@
 title: "A Mathematical Theory of Communication"
 date: "1948-07-01"
 description: "The seminal paper that established information theory as a new field of study. Introduced the concept of entropy and channel capacity."
-author: "Claude Shannon"
+author: "Sérgio Carrôlo"
 tags:
   - "Information Theory"
   - "Mathematics"

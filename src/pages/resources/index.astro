@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/ui/Icon.astro";
+import { PAGES } from "../../config";
+
+if (PAGES.resources.isActive === false) {
+    return Astro.redirect("/404");
+}
+
+const resources = [
+    {
+        title: "INSPIRE profile",
+        description: "Publication record, citation summary, and author metadata.",
+        href: "https://inspirehep.net/authors/2107182?ui-citation-summary=true",
+    },
+    {
+        title: "Publications",
+        description: "Selected papers listed on this website.",
+        href: "/publications",
+    },
+    {
+        title: "arXiv author search",
+        description: "Preprints and recent updates indexed by arXiv.",
+        href: "https://arxiv.org/search/?query=S%C3%A9rgio+Carr%C3%B4lo&searchtype=author",
+    },
+];
+---
+
+<BaseLayout title={PAGES.resources.title}>
+    <header class="page-header">
+        <h1 class="page-title">{PAGES.resources.title}</h1>
+        <p class="page-subtitle">{PAGES.resources.subtitle}</p>
+    </header>
+
+    <section class="item-list">
+        {resources.map((resource) => {
+            const isExternal = resource.href.startsWith("http");
+
+            return (
+                <article class="card">
+                    <div class="card-content">
+                        <a
+                            href={resource.href}
+                            class="card-title"
+                            target={isExternal ? "_blank" : undefined}
+                            rel={isExternal ? "noopener noreferrer" : undefined}
+                        >
+                            {resource.title}
+                        </a>
+                        <p class="card-desc">{resource.description}</p>
+                    </div>
+                    <a
+                        href={resource.href}
+                        class="card-link flex items-center gap-1"
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                    >
+                        Open
+                        {isExternal && <Icon name="ExternalLink" size={14} />}
+                    </a>
+                </article>
+            );
+        })}
+    </section>
+</BaseLayout>

@@ -10,7 +10,9 @@ export const ICONS: Record<string, string> = Object.keys(rawIcons).reduce((acc, 
         .replace('./icons/', '')
         .replace('.svg', '');
 
-    acc[fileName] = rawIcons[filePath];
+    acc[fileName] = rawIcons[filePath]
+        .replace(/^\s*<svg[^>]*>/i, '')
+        .replace(/<\/svg>\s*$/i, '');
     return acc;
 }, {} as Record<string, string>);
 

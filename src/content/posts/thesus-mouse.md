@@ -2,7 +2,7 @@
 title: "Theseus - The Mouse in the Maze"
 date: "1950-03-01"
 description: "My famous experimental machine that learned to navigate a maze using telephone relay circuits and magnetism. One of the first examples of machine learning."
-author: "Claude Shannon"
+author: "Sérgio Carrôlo"
 tags:
   - "AI"
   - "Robotics"

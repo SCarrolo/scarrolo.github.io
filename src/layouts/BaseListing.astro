@@ -34,7 +34,7 @@ const sortedEntries = entries.sort((a: any, b: any) => {
 
     <section class="item-list">
         {sortedEntries.map((entry: any) => {
-            const item = getListingItem(entry);
+            const item = getListingItem(entry, collection);
             return <BaseItemCard {...item} href={`/${collection}/${entry.id}`} />;
         })}
     </section>

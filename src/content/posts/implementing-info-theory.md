@@ -2,7 +2,7 @@
 title: "Implementing Information Theory in Python"
 date: "1956-06-01"
 description: "A practical guide to implementing entropy calculation and data compression using Python."
-author: "Claude Shannon"
+author: "Sérgio Carrôlo"
 tags:
   - "Information Theory"
   - "Python"

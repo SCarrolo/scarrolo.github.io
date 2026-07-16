@@ -2,7 +2,6 @@
 import { getEntry, render } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import BackLink from "../components/ui/BackLink.astro";
-import Tag from "../components/ui/Tag.astro";
 import Icon from "../components/ui/Icon.astro";
 import { getDetailItem } from "../utils/adapters";
 import { SITE } from "../config";
@@ -38,7 +37,7 @@ const ogImage = entry.data.image || SITE.ogImage;
         <BackLink href={detail.backHref} label={collection} />
         {detail.externalUrl && (
             <a href={detail.externalUrl} target="_blank" rel="noopener noreferrer" class="link">
-                View external
+                {detail.externalLabel || "View external"}
             </a>
         )}
     </div>
@@ -57,12 +56,23 @@ const ogImage = entry.data.image || SITE.ogImage;
             </div>
         )}
 
+        {detail.paperReference && (
+            <p class="paper-reference mb-4">
+                <span>Paper:</span>{" "}
+                {detail.paperUrl ? (
+                    <a
+                        href={detail.paperUrl}
+                        target={detail.paperUrl.startsWith("http") ? "_blank" : undefined}
+                        rel={detail.paperUrl.startsWith("http") ? "noopener noreferrer" : undefined}
+                    >
+                        {detail.paperReference}
+                    </a>
+                ) : detail.paperReference}
+            </p>
+        )}
+
         {detail.tags && detail.tags.length > 0 && (
-            <div class="flex gap-2 flex-wrap mb-4">
-                {detail.tags.map((tag: string) => (
-                    <Tag name={tag} size="sm" />
-                ))}
-            </div>
+            <p class="topics-line mb-4">Topics: {detail.tags.join(", ")}</p>
         )}
 
         <div class="prose">

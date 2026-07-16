@@ -2,39 +2,46 @@ import type { SocialLink } from "../types";
 
 export const SOCIALS: SocialLink[] = [
     {
-        name: "Github",
-        href: "https://github.com/shannon",
-        linkTitle: `Follow Claude Shannon on Github`,
+        name: "INSPIRE",
+        href: "https://inspirehep.net/authors/2107182?ui-citation-summary=true",
+        linkTitle: `Sérgio Carrôlo on INSPIRE`,
         isActive: true,
+    },
+    {
+        name: "Github",
+        href: "#",
+        linkTitle: `Follow Sérgio Carrôlo on Github`,
+        isActive: false,
     },
     {
         name: "Mail",
-        href: "mailto:shannon@bell-labs.com",
-        linkTitle: `Send an email to Claude`,
-        isActive: true,
+        href: "#",
+        linkTitle: `Send an email to Sérgio Carrôlo`,
+        isActive: false,
     },
     {
         name: "Google Scholar",
-        href: "https://scholar.google.com/citations?user=shannon",
-        linkTitle: `Claude Shannon on Google Scholar`,
-        isActive: true,
+        href: "#",
+        linkTitle: `Sérgio Carrôlo on Google Scholar`,
+        isActive: false,
     },
     {
         name: "ORCID",
-        href: "https://orcid.org/0000-0002-1825-0097",
-        linkTitle: `Claude Shannon on ORCID`,
-        isActive: true,
+        href: "#",
+        linkTitle: `Sérgio Carrôlo on ORCID`,
+        isActive: false,
     },
     {
         name: "LinkedIn",
-        href: "https://www.linkedin.com/in/claude-shannon-123456789/",
-        linkTitle: `Claude Shannon on LinkedIn`,
-        isActive: true, // Assuming Claude doesn't have a LinkedIn profile
+        href: "#",
+        linkTitle: `Sérgio Carrôlo on LinkedIn`,
+        isActive: false,
     },
 ];
 
 export const SOCIAL_ICONS: Record<string, string> = {
     Github: "Github",
+    INSPIRE: "INSPIRE",
     Mail: "Mail",
     Linkedin: "LinkedIn",
     "Google Scholar": "GoogleScholar",

@@ -1,28 +1,21 @@
 ---
-name: "Claude Shannon"
-avatar: "shannon.jpg"
-shortBio: "Mathematician and electrical engineer known as the 'Father of Information Theory'. Pioneer in digital computing and cryptography."
-institution: "MIT, Cambridge MA"
+name: "Sérgio Carrôlo"
+avatar: "Madeira.JPG"
+shortBio: "PhD candidate studying Scattering Amplitudes in Quantum Field Theory"
+institution: "Max Planck Institute for Physics"
 ---
 
-I am a mathematician and electrical engineer best known for founding **Information Theory**. My work in the late 1940s established the theoretical foundations of modern digital communications and computing.
 
-## My Life
 
-Born in Petoskey, Michigan on April 30, 1916, I showed an early aptitude for engineering and mathematics. After studying at the University of Michigan, I completed my PhD at MIT where I famously applied Boolean algebra to electrical circuits. My master's thesis on relay switching circuits is considered one of the most important master's theses ever written.
-
-During World War, I worked at Bell Labs on fire control systems and cryptography, which led to my seminal work in information theory.
 
 ## Current Work
 
-I continue to work on various problems at the intersection of mathematics, engineering, and computer science. My interests include artificial intelligence, pattern recognition, game theory, and the fundamental limits of computation.
+I’m a PhD student supervised by [Johannes Henn](https://www.mpp.mpg.de/en/about-us/organization/directors/prof-dr-johannes-henn) in the [Quantum field theory](https://www.mpp.mpg.de/en/research/structure-of-matter/quantum-field-theory) group at the Max Planck Institute for Physics. My current research focuses on studying the structure of Scattering Amplitudes in perturbative gauge theories, such as pure Yang-Mills and Quantum Chromodynamics.
 
-I also enjoy juggling, unicycling, and playing the clarinet - I even built a juggling machine!
+Before my PhD I did a master’s degree with [João P. Silva](https://inspirehep.net/authors/988689?ui-citation-summary=true) and [Jorge Romão](https://porthos.tecnico.ulisboa.pt/~romao/Public/homepage/) in Beyond the Standard Model Phenomenology, more specifically Multi-Higgs Models, at Instituto Superior técnico in Lisbon.
 
 ## Research Interests
-
-My research focus includes: **Information Theory**, **Cryptography**, **Digital Computing**, **Artificial Intelligence**, **Game Theory**, and **Switching Circuits**.
-
----
-
-*"I am a mathematician. I am interested in the fundamental limits on the rate at which information can be transmitted."*
+I get excited by any physics problem, but here are some keywords that have particularly excited me recently:
+- **Beyond the Standard Model phenomenology**: The search and understanding of what could lie beyond the standard model.
+- **Scattering amplitudes**: ["The most perfect microscopic structures in the universe"](https://arxiv.org/pdf/1105.0771) - The surprising simplicity in the formulas for scattering amplitudes hinted at a reformulation of the physics in which the physical principles lead us towards rigid final results. 
+- **Surfaceology and Stringy Integrals**: A reformulation of scattering amplitudes in coloured theories which is inspired by integral representations for amplitudes in string theory. It led to completely [novel insights](https://link.springer.com/article/10.1007/JHEP04(2025)078) into theories describing the real world such as pions (Non-linear Sigma model) and Pure Yang-Mills.   

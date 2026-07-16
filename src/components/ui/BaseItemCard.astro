@@ -1,6 +1,6 @@
 ---
-import Tag from "./Tag.astro";
 import Icon from "./Icon.astro";
+import { renderInlineMarkdown } from "../../utils/markdown";
 
 interface Props {
     title: string;
@@ -9,11 +9,31 @@ interface Props {
     date?: string;
     authors?: string;
     extraInput?: string;
+    paperReference?: string;
+    paperUrl?: string;
     tags?: string[];
     externalUrl?: string;
+    externalLabel?: string;
 }
 
-const { title, href, description, date, authors, extraInput, tags, externalUrl } = Astro.props;
+const {
+    title,
+    href,
+    description,
+    date,
+    authors,
+    extraInput,
+    paperReference,
+    paperUrl,
+    tags,
+    externalUrl,
+    externalLabel = "View external",
+} = Astro.props;
+
+const paperLinkIsExternal = paperUrl?.startsWith("http");
+const descriptionHtml = description
+    ? await renderInlineMarkdown(description)
+    : undefined;
 ---
 
 <article class="card">
@@ -41,24 +61,33 @@ const { title, href, description, date, authors, extraInput, tags, externalUrl }
             )}
         </div>
 
-        {
-            tags && tags.length > 0 && (
-                <div class="flex gap-2 flex-wrap mb-3">
-                    {tags.map((tag) => (
-                        <Tag name={tag} size="sm" />
-                    ))}
-                </div>
-            )
-        }
+        {paperReference && (
+            <p class="paper-reference">
+                <span>Paper:</span>{" "}
+                {paperUrl ? (
+                    <a
+                        href={paperUrl}
+                        target={paperLinkIsExternal ? "_blank" : undefined}
+                        rel={paperLinkIsExternal ? "noopener noreferrer" : undefined}
+                    >
+                        {paperReference}
+                    </a>
+                ) : paperReference}
+            </p>
+        )}
 
-        {description && <p class="card-desc">{description}</p>}
+        {tags && tags.length > 0 && (
+            <p class="topics-line">Topics: {tags.join(", ")}</p>
+        )}
+
+        {descriptionHtml && <p class="card-desc" set:html={descriptionHtml} />}
     </div>
 
     {
         externalUrl && (
             <div class="flex-shrink-0">
                 <a href={externalUrl} target="_blank" rel="noopener noreferrer" class="card-link">
-                    View
+                    {externalLabel}
                 </a>
             </div>
         )

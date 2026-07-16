@@ -5,7 +5,6 @@ tags:
   - "Engineering"
   - "Hardware"
   - "Communications"
-external_url: "https://en.wikipedia.org/wiki/Claude_Shannon"
 ---
 
 ## Project Overview

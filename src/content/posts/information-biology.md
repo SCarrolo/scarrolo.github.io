@@ -2,7 +2,7 @@
 title: "Information Theory and Biology"
 date: "1953-04-01"
 description: "Exploring the application of information theory to biological systems and genetics, pioneering the field of bioinformatics."
-author: "Claude Shannon"
+author: "Sérgio Carrôlo"
 tags:
   - "Information Theory"
   - "Biology"

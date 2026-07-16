@@ -2,7 +2,7 @@
 title: "Information Theory and Machine Learning"
 date: "1956-03-01"
 description: "Exploring the connections between information theory and the emerging field of machine learning. Published in the IRE Transactions."
-author: "Claude Shannon"
+author: "Sérgio Carrôlo"
 tags:
   - "Information Theory"
   - "Machine Learning"

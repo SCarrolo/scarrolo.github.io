@@ -25,7 +25,7 @@ const themeDark = THEMES[themeDarkKey] || THEMES.dark_default;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
@@ -63,6 +63,15 @@ const themeDark = THEMES[themeDarkKey] || THEMES.dark_default;
                 scrollbar-gutter: stable;
             }
 
+            [data-theme="light"] {
+                --background: var(--lightBg);
+                --foreground: var(--lightFg);
+                --accent: var(--lightAccent);
+                --text-muted: var(--lightMuted);
+                --border: var(--lightBorder);
+                --surface: var(--lightSurface);
+            }
+
             [data-theme="dark"] {
                 --background: var(--darkBg);
                 --foreground: var(--darkFg);
@@ -77,21 +86,22 @@ const themeDark = THEMES[themeDarkKey] || THEMES.dark_default;
 
         <script is:inline define:vars={{ allowDark: THEME_CONFIG.lightAndDark }}>
             function setTheme() {
+                const defaultTheme = "light";
+                const defaultThemeKey = "theme-default";
                 const theme = (() => {
-                    if (!allowDark) return "light";
+                    if (!allowDark) return defaultTheme;
                     if (
-                        typeof localStorage !== "undefined" &&
-                        localStorage.getItem("theme")
+                        typeof localStorage !== "undefined"
                     ) {
-                        return localStorage.getItem("theme");
+                        if (localStorage.getItem(defaultThemeKey) !== defaultTheme) {
+                            localStorage.setItem("theme", defaultTheme);
+                            localStorage.setItem(defaultThemeKey, defaultTheme);
+                        }
+
+                        return localStorage.getItem("theme") || defaultTheme;
                     }
-                    if (
-                        window.matchMedia("(prefers-color-scheme: dark)")
-                            .matches
-                    ) {
-                        return "dark";
-                    }
-                    return "light";
+
+                    return defaultTheme;
                 })();
 
                 document.documentElement.setAttribute("data-theme", theme);

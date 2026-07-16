@@ -2,7 +2,7 @@
 title: "Setting up Your Academic Portfolio"
 date: "2026-04-28"
 description: "A comprehensive guide on how to clone, configure, and deploy your new academic portfolio."
-author: "Claude Shannon"
+author: "Sérgio Carrôlo"
 tags:
   - "Documentation"
   - "Setup"

@@ -15,8 +15,11 @@ export interface ListingItem {
     date?: string;
     authors?: string;
     extraInput?: string;
+    paperReference?: string;
+    paperUrl?: string;
     tags: string[];
     externalUrl?: string;
+    externalLabel?: string;
     image?: string;
 }
 

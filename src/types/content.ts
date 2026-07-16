@@ -53,6 +53,10 @@ export interface Publication extends BasePage {
 export interface Talk extends BasePage {
   date: string;
   event?: string;
+  paper_reference?: string;
+  paper_slug?: string;
+  paper_url?: string;
+  slides_url?: string;
   external_url?: string;
 }
 
