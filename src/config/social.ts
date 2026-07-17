@@ -15,9 +15,9 @@ export const SOCIALS: SocialLink[] = [
     },
     {
         name: "Mail",
-        href: "#",
+        href: "mailto:sergio.carrolo@mpp.mpg.de",
         linkTitle: `Send an email to Sérgio Carrôlo`,
-        isActive: false,
+        isActive: true,
     },
     {
         name: "Google Scholar",

@@ -38,8 +38,8 @@ const bio = bioCollection[0]?.data;
                         href={social.href}
                         aria-label={social.linkTitle}
                         title={social.linkTitle}
-                        target="_blank"
-                        rel="noreferrer"
+                        target={social.href.startsWith("mailto:") ? undefined : "_blank"}
+                        rel={social.href.startsWith("mailto:") ? undefined : "noreferrer"}
                         class="social-link"
                     >
                         <Icon name={SOCIAL_ICONS[social.name] || social.name} size={24} />
