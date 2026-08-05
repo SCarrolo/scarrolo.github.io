@@ -57,6 +57,7 @@ export interface Talk extends BasePage {
   paper_slug?: string;
   paper_url?: string;
   slides_url?: string;
+  video_url?: string;
   external_url?: string;
 }
 

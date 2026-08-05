@@ -24,6 +24,7 @@ const talks = defineCollection({
         paper_slug: z.string().optional(),
         paper_url: z.string().url().optional(),
         slides_url: z.string().url().optional(),
+        video_url: z.string().url().optional(),
         date: z.string().optional(),
         event: z.string().optional(),
         external_url: z.string().optional(),
