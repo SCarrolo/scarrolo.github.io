@@ -15,10 +15,10 @@ All styles are defined in `@src/styles/global.css`. No inline `<style>` allowed 
 ### Typography Classes
 | Class | Description |
 |-------|-------------|
-| `title-xl` | Page title (1.5rem, 800) |
-| `title-lg` | Section title (1.25rem, 700) |
-| `title-md` | Subsection (1.1rem, 700) |
-| `body` | Body text (0.95rem, 1.65 line-height) |
+| `title-xl` | Page title (serif, 2rem, 500) |
+| `title-lg` | Section title (serif, 1.45rem, 500) |
+| `title-md` | Subsection (serif, 1.2rem, 600) |
+| `body` | Body text (1rem, 1.7 line-height) |
 | `body-sm` | Small text (0.85rem) |
 | `body-xs` | Tiny text (0.75rem) |
 | `mono` | Code/text (JetBrains Mono) |
@@ -45,6 +45,14 @@ All styles are defined in `@src/styles/global.css`. No inline `<style>` allowed 
 | `icon-btn` | Social/share buttons |
 | `social-link` | Social icon links |
 | `link` | Text link with underline |
+| `badge` | Venue label (mono, accent on tinted background) |
+| `chip-list` / `chip` | Topic tags (mono, outlined) |
+| `pill-row` / `pill` | Rounded external-link buttons (arXiv, INSPIRE, slides) |
+| `figure-tile` | 16:10 frame for a paper figure; inverted in dark mode |
+| `section-heading` | Serif heading followed by a hairline rule |
+| `pub` / `pub-*` | Publication list item (thumbnail + text) |
+| `feature` / `feature-grid` | "Selected work" cards on the home page |
+| `agenda` / `agenda-date` | Talk list item with a date column |
 
 ### Layout Section Classes
 | Class | Description |
@@ -93,9 +101,12 @@ All styles are defined in `@src/styles/global.css`. No inline `<style>` allowed 
 ## Color
 
 ### Principles (AstroPaper-inspired)
-- **Monochromatic base:** Let content breathe. No competing colors.
-- **Accent = function:** Use accent only for hover states, active links, and subtle highlights.
-- **One accent color per theme:** Never use multiple accent colors together.
+- **Quiet base:** Near-white page, near-black text. Let content breathe.
+- **Accent = function + identity:** Accent marks links, labels (badges, years) and the hero emphasis.
+- **One accent color per theme:** Never use multiple accent colors together in the UI. Figures may use their own palette.
+- **Surface ≠ background:** Cards and figure tiles sit on `surface`, which is lighter (light theme) or raised (dark theme) relative to `background`.
+- **Sidebar panel:** themes may set `sidebar` / `sidebarText`; the sidebar then becomes a coloured panel (extended to the window edge on wide screens).
+- **Active themes:** `light_petrol` / `dark_petrol` (petroleum blue). Alternative: `light_mpg` / `dark_mpg` (Max Planck green) — switch in `src/config/site.ts`.
 
 ### Theme System
 - Themes configured in `src/config/themes.ts` - unified THEMES object with `isDark` flag
@@ -112,14 +123,27 @@ All styles are defined in `@src/styles/global.css`. No inline `<style>` allowed 
 ## Typography
 
 ### Font Stack
-- **Body/Headings:** Inter (via @fontsource/inter)
+- **Headings:** Newsreader (serif, via @fontsource-variable/newsreader)
+- **Body:** Inter (via @fontsource/inter)
 - **Code/Tags/Metadata:** JetBrains Mono (via @fontsource/jetbrains-mono)
 - No external web fonts—self-host via fontsource packages
 
 ### Hierarchy
-- **Page title:** 1.5rem, font-weight 800, letter-spacing -0.02em, line-height 1.2
-- **Section heading (h2):** 1.25rem, font-weight 700, border-bottom 1px solid border
-- **Body text:** 0.95rem, line-height 1.65, opacity 0.92
+- **Home intro:** the first section of `bio.md` opens the page, in normal body text
+- **Page title:** serif, 2.4rem, weight 500, letter-spacing -0.02em
+- **Section heading (h2):** serif, 1.45rem, weight 500, followed by a hairline rule
+- **Body text:** 1rem, line-height 1.7; secondary text uses `--text-muted` (not opacity)
+
+---
+
+## Figures
+
+- Each publication can set `image` in its frontmatter: the thumbnail used in lists and cards (e.g. `/images/papers/<slug>.webp`). A single diagram reads best at thumbnail size.
+- `figure` (optional) is the full figure shown on the paper's own page, with an optional `figure_caption`. Without `figure`, the page shows `image`.
+- Figures are cropped from the arXiv sources/PDFs and saved as WebP with a transparent background.
+- Use line art on a transparent or white background. In dark mode, `.figure-tile img` is inverted (`invert(1) hue-rotate(180deg)`), so dark ink becomes light.
+- `featured: true` on a publication puts it in "Selected work" on the home page (first three, newest first).
+- The home page opens with the first section of `src/content/bio.md` ("Current Work"); the remaining sections follow, then "Selected work".
 
 ---
 

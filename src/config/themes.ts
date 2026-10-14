@@ -3,6 +3,52 @@ import type { Theme, ThemeColors, ThemeName } from "../types/themes";
 export { type Theme, type ThemeName, type ThemeColors };
 
 export const THEMES: Record<string, Theme> = {
+    // Near-white page with a dark petroleum-blue sidebar and accent.
+    light_petrol: {
+        background: "#f8fafb",
+        foreground: "#111827",
+        accent: "#0e5566",
+        muted: "#4a5563",
+        border: "#e2e8eb",
+        surface: "#ffffff",
+        sidebar: "#0f3d4a",
+        sidebarText: "#eef5f6",
+        isDark: false,
+    },
+    dark_petrol: {
+        background: "#0c171b",
+        foreground: "#e4eef0",
+        accent: "#7fd0dc",
+        muted: "#a3b9be",
+        border: "#223a42",
+        surface: "#132329",
+        sidebar: "#0a2931",
+        sidebarText: "#e4eef0",
+        isDark: true,
+    },
+    // Same layout in Max Planck green.
+    light_mpg: {
+        background: "#f8faf9",
+        foreground: "#111827",
+        accent: "#005e59",
+        muted: "#4a5563",
+        border: "#e1e9e7",
+        surface: "#ffffff",
+        sidebar: "#003f3c",
+        sidebarText: "#eef6f5",
+        isDark: false,
+    },
+    dark_mpg: {
+        background: "#0b1716",
+        foreground: "#e3efed",
+        accent: "#6fd3c8",
+        muted: "#a1bbb7",
+        border: "#203b38",
+        surface: "#122422",
+        sidebar: "#08302d",
+        sidebarText: "#e3efed",
+        isDark: true,
+    },
     light_default: {
         background: "#f9fafb",
         foreground: "#111827",

@@ -29,7 +29,7 @@ const { name, title, experience = [], education = [] } = cvEntry.data;
         {
             experience.length > 0 && (
                 <section class="section">
-                    <h2 class="section-title border-b border-border pb-2">
+                    <h2 class="section-heading">
                         Professional Experience
                     </h2>
                     <Timeline items={experience.map(exp => ({
@@ -45,7 +45,7 @@ const { name, title, experience = [], education = [] } = cvEntry.data;
         {
             education.length > 0 && (
                 <section class="section">
-                    <h2 class="section-title border-b border-border pb-2">
+                    <h2 class="section-heading">
                         Education
                     </h2>
                     <Timeline items={education.map(edu => ({

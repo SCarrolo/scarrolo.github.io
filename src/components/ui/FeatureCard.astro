@@ -1,0 +1,26 @@
+---
+import { shortVenue, getYear } from "../../utils/publications";
+
+interface Props {
+    entry: any;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const venue = shortVenue(d.journal) ?? "Preprint";
+---
+
+<a href={`/publications/${entry.id}`} class="feature">
+    {d.image && (
+        <div class="figure-tile">
+            <img src={d.image} alt="" width="400" height="250" loading="lazy" decoding="async" />
+        </div>
+    )}
+    <div class="feature-body">
+        <div class="pub-meta">
+            <span class="badge">{venue}</span>
+            <span>{getYear(d.date)}</span>
+        </div>
+        <h3 class="feature-title">{d.title}</h3>
+    </div>
+</a>

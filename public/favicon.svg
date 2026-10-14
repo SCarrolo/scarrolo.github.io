@@ -1,10 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-  <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
-  <style>
-    path { stroke: #000; }
-    @media (prefers-color-scheme: dark) {
-      path { stroke: #FFF; }
-    }
-  </style>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Four-point box on-shell diagram on a petroleum tile -->
+  <rect width="32" height="32" rx="7" fill="#0f3d4a"/>
+  <g stroke="#eef5f6" stroke-width="2.2" stroke-linecap="round">
+    <path d="M9.5 9.5H22.5V22.5H9.5Z" fill="none"/>
+    <path d="M9.5 9.5L3.5 3.5M22.5 9.5L28.5 3.5M22.5 22.5L28.5 28.5M9.5 22.5L3.5 28.5"/>
+  </g>
+  <g stroke="#eef5f6" stroke-width="1.6">
+    <circle cx="9.5" cy="9.5" r="2.9" fill="#eef5f6"/>
+    <circle cx="22.5" cy="9.5" r="2.9" fill="#0f3d4a"/>
+    <circle cx="22.5" cy="22.5" r="2.9" fill="#eef5f6"/>
+    <circle cx="9.5" cy="22.5" r="2.9" fill="#0f3d4a"/>
+  </g>
 </svg>

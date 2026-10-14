@@ -5,7 +5,7 @@ export const SITE: SiteConfig = {
     author: "Sérgio Carrôlo",
     desc: "Personal academic portfolio and blog of Sérgio Carrôlo.",
     title: "Sérgio Carrôlo",
-    ogImage: "profile.jpg",
+    ogImage: "Madeira.JPG",
     postPerPage: 5,
     favicon: "/favicon.svg",
     lang: "en",
@@ -13,14 +13,14 @@ export const SITE: SiteConfig = {
 
 export const THEME_CONFIG: ThemeConfig = {
     lightAndDark: true,
-    themeLight: "light_default",
-    themeDark: "dark_default",
+    themeLight: "light_petrol",
+    themeDark: "dark_petrol",
 };
 
 export const SETTINGS: SettingsConfig = {
     showTagsInNavbar: true,
     showRSSInFooter: true,
-    addDevToolsInProduction: true,
+    addDevToolsInProduction: false,
 };
 
 const umami: UmamiAnalyticsConfig = {

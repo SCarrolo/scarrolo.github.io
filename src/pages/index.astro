@@ -1,31 +1,47 @@
 ---
-import { getEntry, render } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FeatureCard from "../components/ui/FeatureCard.astro";
+import OnShellMotif from "../components/ui/OnShellMotif.astro";
 import { PAGES } from "../config";
+import { renderMarkdown } from "../utils/markdown";
+import { byDateDesc } from "../utils/publications";
 
-// Load bio content
+// Load bio content. Its first section (e.g. "Current Work") introduces who I am and
+// opens the page; the remaining sections (e.g. "Research Interests") follow right after it, before "Selected work".
 const bioEntry = await getEntry("bio", "bio");
-const { Content: BioContent } = bioEntry
-	? await render(bioEntry)
-	: { Content: null };
+const [introSection, ...otherSections] = (bioEntry?.body ?? "")
+	.split(/^(?=## )/m)
+	.map((section) => section.trim())
+	.filter(Boolean);
+const introHtml = introSection ? await renderMarkdown(introSection.replace(/^## .*\n/, "")) : undefined;
+const moreHtml = otherSections.length > 0 ? await renderMarkdown(otherSections.join("\n\n")) : undefined;
+
+const publications = PAGES.publications.isActive ? (await getCollection("publications")).sort(byDateDesc) : [];
+
+const featured = publications.filter((p) => p.data.featured).slice(0, 3);
 ---
 
 <BaseLayout title={PAGES.home.title}>
 	<div class="container-narrow">
-		{
-			(PAGES.home.title || PAGES.home.subtitle) && (
-				<header class="page-header">
-					{PAGES.home.title && (
-							<h1 class="page-title about-page-title">{PAGES.home.title}</h1>
-					)}
-					{PAGES.home.subtitle && (
-						<p class="page-subtitle">{PAGES.home.subtitle}</p>
-					)}
-				</header>
-			)
-		}
-		<div class="prose about-sections">
-			{BioContent ? <BioContent /> : <p>Loading bio...</p>}
-		</div>
+		<section class="hero">
+			<div class="hero-text">
+				<h1 class="page-title hero-title">{PAGES.home.title}</h1>
+				{introHtml && <div class="hero-intro" set:html={introHtml} />}
+			</div>
+			<OnShellMotif class="hero-motif" />
+		</section>
+
+		{moreHtml && <div class="prose about-sections" set:html={moreHtml} />}
+
+		{featured.length > 0 && (
+			<section class="home-section">
+				<h2 class="section-heading">Selected work</h2>
+				<div class="feature-grid">
+					{featured.map((entry) => <FeatureCard entry={entry} />)}
+				</div>
+				<a href="/publications" class="more-link">All publications &rarr;</a>
+			</section>
+		)}
 	</div>
 </BaseLayout>

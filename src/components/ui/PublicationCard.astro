@@ -1,0 +1,49 @@
+---
+import Icon from "./Icon.astro";
+import { renderInlineMarkdown } from "../../utils/markdown";
+import { highlightAuthor, shortVenue, arxivId, inspireUrl, formatMonthYear } from "../../utils/publications";
+
+interface Props {
+    entry: any;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const href = `/publications/${entry.id}`;
+const venue = shortVenue(d.journal);
+const venueDetails = venue && d.journal ? d.journal.slice(d.journal.indexOf(venue) + venue.length).replace(/^[\s,]+/, "") : undefined;
+const arxiv = arxivId(d.external_url);
+const inspire = inspireUrl(d.external_url);
+const descriptionHtml = d.description ? await renderInlineMarkdown(d.description) : undefined;
+---
+
+<article class={d.image ? "pub" : "pub pub-no-figure"}>
+    {d.image && (
+        <a href={href} class="pub-figure figure-tile" tabindex="-1" aria-hidden="true">
+            <img src={d.image} alt="" width="400" height="250" loading="lazy" decoding="async" />
+        </a>
+    )}
+    <div class="pub-body">
+        <div class="pub-meta">
+            <span class="badge">{venue ?? "Preprint"}</span>
+            <span>{venue ? venueDetails : formatMonthYear(d.date)}</span>
+        </div>
+        <h3 class="pub-title"><a href={href}>{d.title}</a></h3>
+        {d.author && <p class="pub-authors" set:html={highlightAuthor(d.author)} />}
+        {descriptionHtml && <p class="pub-desc" set:html={descriptionHtml} />}
+        <div class="pill-row">
+            {d.external_url && (
+                <a class="pill" href={d.external_url} target="_blank" rel="noopener noreferrer">
+                    {arxiv ? `arXiv:${arxiv}` : "Paper"}
+                    <Icon name="ExternalLink" size={13} />
+                </a>
+            )}
+            {inspire && (
+                <a class="pill" href={inspire} target="_blank" rel="noopener noreferrer">
+                    INSPIRE
+                    <Icon name="ExternalLink" size={13} />
+                </a>
+            )}
+        </div>
+    </div>
+</article>

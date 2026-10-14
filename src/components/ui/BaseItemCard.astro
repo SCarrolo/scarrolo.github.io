@@ -36,34 +36,32 @@ const descriptionHtml = description
     : undefined;
 ---
 
-<article class="card">
+<article class="card agenda">
+    <div class="agenda-date">{date}</div>
+
     <div class="card-content">
         <a href={href} class="card-title">{title}</a>
 
-        <div class="card-meta">
-            {date && (
-                <span class="flex items-center gap-1">
-                    <Icon name="Calendar" size={24} />
-                    <span>{date}</span>
-                </span>
-            )}
-            {authors && (
-                <span class="flex items-center gap-1">
-                    <Icon name="User" size={24} />
-                    <span>{authors}</span>
-                </span>
-            )}
-            {extraInput && (
-                <span class="flex items-center gap-1">
-                    <Icon name="Institution" size={24} />
-                    <span>{extraInput}</span>
-                </span>
-            )}
-        </div>
+        {(authors || extraInput) && (
+            <div class="card-meta">
+                {authors && (
+                    <span class="flex items-center gap-1">
+                        <Icon name="User" size={18} />
+                        <span>{authors}</span>
+                    </span>
+                )}
+                {extraInput && (
+                    <span class="flex items-center gap-1">
+                        <Icon name="Institution" size={18} />
+                        <span>{extraInput}</span>
+                    </span>
+                )}
+            </div>
+        )}
 
         {paperReference && (
             <p class="paper-reference">
-                <span>Paper:</span>{" "}
+                <span>Paper</span>{" "}
                 {paperUrl ? (
                     <a
                         href={paperUrl}
@@ -76,20 +74,21 @@ const descriptionHtml = description
             </p>
         )}
 
+        {descriptionHtml && <p class="card-desc" set:html={descriptionHtml} />}
+
         {tags && tags.length > 0 && (
-            <p class="topics-line">Topics: {tags.join(", ")}</p>
+            <ul class="chip-list" aria-label="Topics">
+                {tags.map((tag) => <li class="chip">{tag}</li>)}
+            </ul>
         )}
 
-        {descriptionHtml && <p class="card-desc" set:html={descriptionHtml} />}
-    </div>
-
-    {
-        externalUrl && (
-            <div class="flex-shrink-0">
-                <a href={externalUrl} target="_blank" rel="noopener noreferrer" class="card-link">
+        {externalUrl && (
+            <div class="pill-row">
+                <a href={externalUrl} target="_blank" rel="noopener noreferrer" class="pill">
                     {externalLabel}
+                    <Icon name="ExternalLink" size={13} />
                 </a>
             </div>
-        )
-    }
+        )}
+    </div>
 </article>

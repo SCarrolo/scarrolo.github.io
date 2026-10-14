@@ -5,6 +5,9 @@ export interface ThemeColors {
     muted: string;
     border: string;
     surface: string;
+    /** Optional sidebar panel colours; default to background/foreground. */
+    sidebar?: string;
+    sidebarText?: string;
 }
 
 export interface Theme extends ThemeColors {

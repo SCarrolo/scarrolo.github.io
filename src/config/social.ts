@@ -8,6 +8,12 @@ export const SOCIALS: SocialLink[] = [
         isActive: true,
     },
     {
+        name: "arXiv",
+        href: "https://arxiv.org/search/?query=S%C3%A9rgio+Carr%C3%B4lo&searchtype=author",
+        linkTitle: `Sérgio Carrôlo on arXiv`,
+        isActive: true,
+    },
+    {
         name: "Github",
         href: "#",
         linkTitle: `Follow Sérgio Carrôlo on Github`,
@@ -42,6 +48,7 @@ export const SOCIALS: SocialLink[] = [
 export const SOCIAL_ICONS: Record<string, string> = {
     Github: "Github",
     INSPIRE: "INSPIRE",
+    arXiv: "arXiv",
     Mail: "Mail",
     Linkedin: "LinkedIn",
     "Google Scholar": "GoogleScholar",

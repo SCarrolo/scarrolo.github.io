@@ -4,6 +4,8 @@ import BaseLayout from "./BaseLayout.astro";
 import BackLink from "../components/ui/BackLink.astro";
 import Icon from "../components/ui/Icon.astro";
 import { getDetailItem } from "../utils/adapters";
+import { renderInlineMarkdown } from "../utils/markdown";
+import { highlightAuthor, shortVenue, arxivId, inspireUrl } from "../utils/publications";
 import { SITE } from "../config";
 
 interface Props {
@@ -18,62 +20,100 @@ if (!entry) return Astro.redirect("/404");
 
 const { Content } = await render(entry);
 const detail = getDetailItem(entry, collection);
+const d = entry.data;
+const isPublication = collection === "publications";
+const isTalk = collection === "talks";
 
-const meta = [];
-if (detail.date) meta.push({ label: "Date", value: detail.date, icon: "Calendar" });
-if (detail.authors) meta.push({ label: "Author", value: detail.authors, icon: "User" });
-if (detail.extraInput) {
-    const icon = "Institution";
-    const label = collection === "publications" ? "Journal" : collection === "talks" ? "Event" : collection === "teaching" ? "Institution" : "Info";
-    meta.push({ label, value: detail.extraInput, icon });
+const venue = isPublication ? shortVenue(d.journal) : undefined;
+const badge = isPublication ? (venue ?? "Preprint") : isTalk ? "Talk" : undefined;
+const venueDetails = venue ? d.journal.slice(d.journal.indexOf(venue) + venue.length).replace(/^[\s,]+/, "") : undefined;
+const authorsHtml = detail.authors ? highlightAuthor(detail.authors) : undefined;
+// The one-line description (used in listings) is shown only when the entry has no text of its own,
+// which would otherwise repeat it.
+const hasBody = Boolean(entry.body?.trim());
+const descriptionHtml = d.description && !hasBody ? await renderInlineMarkdown(d.description) : undefined;
+
+const links: { href: string; label: string }[] = [];
+if (isPublication) {
+    const arxiv = arxivId(d.external_url);
+    const inspire = inspireUrl(d.external_url);
+    if (d.external_url) links.push({ href: d.external_url, label: arxiv ? `arXiv:${arxiv}` : "Paper" });
+    if (inspire) links.push({ href: inspire, label: "INSPIRE" });
+} else if (isTalk) {
+    if (d.video_url) links.push({ href: d.video_url, label: "Watch talk" });
+    if (d.slides_url) links.push({ href: d.slides_url, label: "Slides" });
+    if (d.external_url) links.push({ href: d.external_url, label: "Event page" });
+} else if (detail.externalUrl) {
+    links.push({ href: detail.externalUrl, label: detail.externalLabel || "View external" });
 }
 
-const description = entry.data.description || detail.description || SITE.desc;
-const ogImage = entry.data.image || SITE.ogImage;
+const description = d.description || detail.description || SITE.desc;
+const figure = d.figure || d.image;
+const ogImage = figure || SITE.ogImage;
 ---
 
 <BaseLayout title={detail.title} description={description} ogImage={ogImage} ogType="article">
-    <div class="flex justify-between items-center mb-4">
-        <BackLink href={detail.backHref} label={collection} />
-        {detail.externalUrl && (
-            <a href={detail.externalUrl} target="_blank" rel="noopener noreferrer" class="link">
-                {detail.externalLabel || "View external"}
-            </a>
-        )}
-    </div>
+    <BackLink href={detail.backHref} label={collection} />
 
-    <article>
-        <h1 class="page-title mb-4">{detail.title}</h1>
-
-        {meta.length > 0 && (
-            <div class="card-meta mb-4">
-                {meta.map((m: any) => (
-                    <span class="flex items-center gap-1">
-                        <Icon name={m.icon} size={14} />
-                        <span>{m.value}</span>
-                    </span>
-                ))}
+    <article class="detail">
+        <header class="detail-header">
+            <div class="pub-meta">
+                {badge && <span class="badge">{badge}</span>}
+                {venueDetails ? <span>{venueDetails}</span> : detail.date && <span>{detail.date}</span>}
             </div>
+
+            <h1 class="page-title">{detail.title}</h1>
+
+            {authorsHtml && <p class="pub-authors" set:html={authorsHtml} />}
+
+            {isTalk && detail.extraInput && (
+                <p class="detail-line">
+                    <Icon name="Institution" size={18} />
+                    <span>{detail.extraInput}</span>
+                </p>
+            )}
+
+            {detail.paperReference && (
+                <p class="detail-line">
+                    <span class="detail-label">Paper</span>
+                    {detail.paperUrl ? (
+                        <a
+                            href={detail.paperUrl}
+                            target={detail.paperUrl.startsWith("http") ? "_blank" : undefined}
+                            rel={detail.paperUrl.startsWith("http") ? "noopener noreferrer" : undefined}
+                        >
+                            {detail.paperReference}
+                        </a>
+                    ) : detail.paperReference}
+                </p>
+            )}
+
+            {detail.tags && detail.tags.length > 0 && (
+                <ul class="chip-list" aria-label="Topics">
+                    {detail.tags.map((tag: string) => <li class="chip">{tag}</li>)}
+                </ul>
+            )}
+
+            {links.length > 0 && (
+                <div class="pill-row">
+                    {links.map((link) => (
+                        <a class="pill" href={link.href} target="_blank" rel="noopener noreferrer">
+                            {link.label}
+                            <Icon name="ExternalLink" size={13} />
+                        </a>
+                    ))}
+                </div>
+            )}
+        </header>
+
+        {figure && (
+            <figure class="figure-tile detail-figure">
+                <img src={figure} alt={d.figure_caption || `Figure from “${detail.title}”`} decoding="async" />
+                {d.figure_caption && <figcaption>{d.figure_caption}</figcaption>}
+            </figure>
         )}
 
-        {detail.paperReference && (
-            <p class="paper-reference mb-4">
-                <span>Paper:</span>{" "}
-                {detail.paperUrl ? (
-                    <a
-                        href={detail.paperUrl}
-                        target={detail.paperUrl.startsWith("http") ? "_blank" : undefined}
-                        rel={detail.paperUrl.startsWith("http") ? "noopener noreferrer" : undefined}
-                    >
-                        {detail.paperReference}
-                    </a>
-                ) : detail.paperReference}
-            </p>
-        )}
-
-        {detail.tags && detail.tags.length > 0 && (
-            <p class="topics-line mb-4">Topics: {detail.tags.join(", ")}</p>
-        )}
+        {descriptionHtml && <p class="lead" set:html={descriptionHtml} />}
 
         <div class="prose">
             <Content />

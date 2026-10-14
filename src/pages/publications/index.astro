@@ -1,14 +1,37 @@
 ---
-import BaseListing from "../../layouts/BaseListing.astro";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PublicationCard from "../../components/ui/PublicationCard.astro";
 import { PAGES } from "../../config";
+import { byDateDesc, getYear } from "../../utils/publications";
 
 if (PAGES.publications.isActive === false) {
     return Astro.redirect("/404");
 }
+
+const publications = (await getCollection("publications")).sort(byDateDesc);
+
+const groups: { year: string; entries: typeof publications }[] = [];
+for (const entry of publications) {
+    const year = getYear(entry.data.date);
+    const last = groups.at(-1);
+    if (last?.year === year) last.entries.push(entry);
+    else groups.push({ year, entries: [entry] });
+}
 ---
 
-<BaseListing
-    collection="publications"
-    title={PAGES.publications.title}
-    subtitle={PAGES.publications.subtitle}
-/>
+<BaseLayout title={PAGES.publications.title}>
+    <header class="page-header">
+        <h1 class="page-title">{PAGES.publications.title}</h1>
+        {PAGES.publications.subtitle && <p class="page-subtitle">{PAGES.publications.subtitle}</p>}
+    </header>
+
+    {groups.map((group) => (
+        <section class="year-group">
+            <h2 class="section-heading year-heading">{group.year}</h2>
+            <div class="pub-list">
+                {group.entries.map((entry) => <PublicationCard entry={entry} />)}
+            </div>
+        </section>
+    ))}
+</BaseLayout>

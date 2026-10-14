@@ -4,6 +4,9 @@ author: "Sérgio Carrôlo, Dmitry Chicherin, Johannes Henn, Qinglin Yang, Yang Z
 date: "2025-05-02"
 journal: "JHEP 07, 214 (2025)"
 external_url: "https://arxiv.org/abs/2505.01245"
+image: "/images/papers/hexagonal-wilson-loop-lagrangian-insertion.webp"
+figure: "/images/papers/hexagonal-wilson-loop-lagrangian-insertion-figure.webp"
+figure_caption: "Fig. 1 of the paper: six-point planar Feynman integral sectors corresponding to genuine two-loop singularities of the observable."
 description: "A two-loop bootstrap computation of the null hexagonal Wilson loop with a Lagrangian insertion in planar maximally supersymmetric Yang-Mills theory."
 tags:
   - "Wilson Loops"

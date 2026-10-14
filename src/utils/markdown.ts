@@ -8,6 +8,10 @@ const inlineMarkdownProcessor = unified()
     .use(remarkRehype)
     .use(rehypeStringify);
 
+export async function renderMarkdown(markdown: string): Promise<string> {
+    return String(await inlineMarkdownProcessor.process(markdown)).trim();
+}
+
 export async function renderInlineMarkdown(markdown: string): Promise<string> {
     const html = String(await inlineMarkdownProcessor.process(markdown)).trim();
 

@@ -8,6 +8,8 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import "@fontsource/inter/800.css";
+import "@fontsource-variable/newsreader/opsz.css";
+import "@fontsource-variable/newsreader/opsz-italic.css";
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 import "katex/dist/katex.min.css";
@@ -42,7 +44,12 @@ const jsonLd = {
     "@type": "Person",
     name: SITE.author,
     url: SITE.website,
-    jobTitle: "Professor",
+    jobTitle: "PhD Candidate",
+    affiliation: {
+        "@type": "Organization",
+        name: "Max Planck Institute for Physics",
+        url: "https://www.mpp.mpg.de",
+    },
     description: SITE.desc,
 };
 ---
@@ -52,8 +59,10 @@ const jsonLd = {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href={SITE.favicon} />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <!-- ?v= busts browsers' favicon cache; bump it whenever the icon changes -->
+        <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+        <link rel="icon" type="image/svg+xml" href={`${SITE.favicon}?v=2`} />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
         <meta name="generator" content={Astro.generator} />
 
         <!-- Robots / Indexing -->
@@ -68,6 +77,8 @@ const jsonLd = {
                 lightMuted: themeLight.muted,
                 lightBorder: themeLight.border,
                 lightSurface: themeLight.surface,
+                lightSidebar: themeLight.sidebar ?? themeLight.background,
+                lightSidebarText: themeLight.sidebarText ?? themeLight.foreground,
 
                 darkBg: themeDark.background,
                 darkFg: themeDark.foreground,
@@ -75,6 +86,8 @@ const jsonLd = {
                 darkMuted: themeDark.muted,
                 darkBorder: themeDark.border,
                 darkSurface: themeDark.surface,
+                darkSidebar: themeDark.sidebar ?? themeDark.background,
+                darkSidebarText: themeDark.sidebarText ?? themeDark.foreground,
             }}
         >
             :root {
@@ -84,6 +97,8 @@ const jsonLd = {
                 --text-muted: var(--lightMuted);
                 --border: var(--lightBorder);
                 --surface: var(--lightSurface);
+                --sidebar-bg: var(--lightSidebar);
+                --sidebar-fg: var(--lightSidebarText);
                 scrollbar-gutter: stable;
             }
 
@@ -94,6 +109,8 @@ const jsonLd = {
                 --text-muted: var(--lightMuted);
                 --border: var(--lightBorder);
                 --surface: var(--lightSurface);
+                --sidebar-bg: var(--lightSidebar);
+                --sidebar-fg: var(--lightSidebarText);
             }
 
             [data-theme="dark"] {
@@ -103,6 +120,8 @@ const jsonLd = {
                 --text-muted: var(--darkMuted);
                 --border: var(--darkBorder);
                 --surface: var(--darkSurface);
+                --sidebar-bg: var(--darkSidebar);
+                --sidebar-fg: var(--darkSidebarText);
             }
         </style>
 
@@ -182,27 +201,14 @@ const jsonLd = {
         }
         <script is:inline>
             function setTheme() {
-                const defaultTheme = "light";
-                const defaultThemeKey = "theme-default";
-                const theme = (() => {
-                    if (
-                        typeof localStorage !== "undefined"
-                    ) {
-                        if (localStorage.getItem(defaultThemeKey) !== defaultTheme) {
-                            localStorage.setItem("theme", defaultTheme);
-                            localStorage.setItem(defaultThemeKey, defaultTheme);
-                        }
-
-                        return localStorage.getItem("theme") || defaultTheme;
-                    }
-
-                    return defaultTheme;
-                })();
-
+                // An explicit choice (theme toggle) wins; otherwise follow the visitor's system setting.
+                let stored = null;
+                try {
+                    stored = localStorage.getItem("theme-choice");
+                } catch (e) {}
+                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                const theme = stored === "dark" || stored === "light" ? stored : prefersDark ? "dark" : "light";
                 document.documentElement.setAttribute("data-theme", theme);
-                if (typeof localStorage !== "undefined") {
-                    localStorage.setItem("theme", theme);
-                }
             }
 
             setTheme();
@@ -219,7 +225,9 @@ const jsonLd = {
                             "data-theme",
                             next,
                         );
-                        localStorage.setItem("theme", next);
+                        try {
+                            localStorage.setItem("theme-choice", next);
+                        } catch (e) {}
                     });
                 }
             }

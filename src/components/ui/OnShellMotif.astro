@@ -1,0 +1,52 @@
+---
+// Decorative on-shell diagram: the six-point Gr(3,6) top cell, drawn as a hexagonal face with
+// boxes on alternating edges. Coordinates and line weights follow the TikZ house style
+// (scale 0.8, side 1.2, very thick edges, vertex radius 0.2); y is flipped for SVG.
+interface Props {
+    class?: string;
+}
+
+const { class: className } = Astro.props;
+
+type Point = [number, number];
+const rad = (deg: number) => (deg * Math.PI) / 180;
+const polar = (deg: number, r: number): Point => [r * Math.cos(rad(deg)), r * Math.sin(rad(deg))];
+const add = (p: Point, q: Point): Point => [p[0] + q[0], p[1] + q[1]];
+const svg = ([x, y]: Point) => ({ x, y: -y });
+
+const side = 1.2;
+const h = [0, 60, 120, 180, 240, 300].map((deg) => polar(deg, side));
+const a1 = add(h[1], polar(90, side));
+const b1 = add(h[2], polar(90, side));
+const a2 = add(h[3], polar(210, side));
+const b2 = add(h[4], polar(210, side));
+const b3 = add(h[5], polar(330, side));
+const a3 = add(h[0], polar(330, side));
+
+const edges: [Point, Point][] = [
+    ...h.map((p, i): [Point, Point] => [p, h[(i + 1) % 6]]),
+    [h[1], a1], [a1, b1], [b1, h[2]],
+    [h[3], a2], [a2, b2], [b2, h[4]],
+    [h[5], b3], [b3, a3], [a3, h[0]],
+];
+
+// External legs leave each box corner diagonally; particles are numbered counter-clockwise.
+const legs: [Point, number][] = [[a1, 45], [b1, 135], [a2, 165], [b2, 255], [b3, 285], [a3, 15]];
+
+const black = [h[0], h[2], h[4], a1, a2, b3];
+const white = [h[1], h[3], h[5], b1, b2, a3];
+---
+
+<svg class={className} viewBox="-3.95 -3.55 7.9 6.95" aria-hidden="true" focusable="false">
+    {edges.map(([p, q]) => <line x1={svg(p).x} y1={svg(p).y} x2={svg(q).x} y2={svg(q).y} class="motif-edge" />)}
+    {legs.map(([p, deg]) => {
+        const end = add(p, polar(deg, 1));
+        return <line x1={svg(p).x} y1={svg(p).y} x2={svg(end).x} y2={svg(end).y} class="motif-edge" />;
+    })}
+    {black.map((p) => <circle cx={svg(p).x} cy={svg(p).y} r="0.2" class="motif-black" />)}
+    {white.map((p) => <circle cx={svg(p).x} cy={svg(p).y} r="0.2" class="motif-white" />)}
+    {legs.map(([p, deg], i) => {
+        const at = svg(add(p, polar(deg, 1.35)));
+        return <text x={at.x} y={at.y} class="motif-label" text-anchor="middle" dominant-baseline="central">{i + 1}</text>;
+    })}
+</svg>
